@@ -6,6 +6,7 @@
 #include "MovementController.h"
 #include "SequenceGenerator.h"
 #include <iostream>
+#include <cstdio>
 #include <windows.h>
 
 ColorRenderer::ColorRenderer() {
@@ -37,8 +38,17 @@ void ColorRenderer::renderFrame(
     std::string out = "\x1b[?25l\x1b[H"; 
 
     out += "\x1b[97m=== NEON TETRIS ===\x1b[0m\n\n";
+    int totalSeconds = rules.getPlayTimeSeconds();
+    int minutes = totalSeconds / 60;
+    int seconds = totalSeconds % 60;
+    char timeText[16];
+    std::snprintf(timeText, sizeof(timeText), "%02d:%02d", minutes, seconds);
+
     out += "Score: \x1b[92m" + std::to_string(rules.getScore()) + "\x1b[0m | ";
-    out += "Level: \x1b[93m" + std::to_string(rules.getLevel()) + "\x1b[0m\n\n";
+    out += "Level: \x1b[93m" + std::to_string(rules.getLevel()) + "\x1b[0m | ";
+    out += "Time: \x1b[96m";
+    out += timeText;
+    out += "\x1b[0m\n\n";
 
     // Рисуем поле
     out += "  \x1b[37m+--------------------+\x1b[0m\n";

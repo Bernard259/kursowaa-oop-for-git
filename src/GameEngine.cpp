@@ -20,12 +20,17 @@ GameEngine::GameEngine(IRenderer* rendererInstance)
     leftRepeatTimer = 0;
     rightRepeatTimer = 0;
     lastGravityTick = 0;
+    lastFrameTick = 0;
 
     restartRound();
 }
 
 void GameEngine::run() {
     while (true) {
+        unsigned long frameNowTick = GetTickCount();
+        unsigned long frameDelta = frameNowTick - lastFrameTick;
+        lastFrameTick = frameNowTick;
+
         keyScanner.refresh();
         if (keyScanner.isDown(VK_ESCAPE)) {
             break;
@@ -34,6 +39,8 @@ void GameEngine::run() {
         handleEdgeCommands();
 
         if (!paused && !rules.isGameOver()) {
+            rules.addPlayTimeMs(static_cast<int>(frameDelta));
+
             if (commandMapper.getMoveLeft()) {
                 if (leftRepeatTimer <= 0) {
                     movement.tryMoveLeft();
@@ -90,6 +97,7 @@ void GameEngine::restartRound() {
     leftRepeatTimer = 0;
     rightRepeatTimer = 0;
     lastGravityTick = GetTickCount();
+    lastFrameTick = lastGravityTick;
 }
 
 void GameEngine::handleEdgeCommands() {

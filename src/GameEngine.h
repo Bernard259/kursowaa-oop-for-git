@@ -43,4 +43,5 @@ private:
     int leftRepeatTimer;
     int rightRepeatTimer;
     unsigned long lastGravityTick;
+    unsigned long lastFrameTick;
 };

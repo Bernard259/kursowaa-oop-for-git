@@ -12,6 +12,7 @@ void RuleManager::reset()
     level = 1;
     totalLinesCleared = 0;
     comboChain = 0;
+    playTimeMs = 0;
     gameOver = false;
 }
 
@@ -92,6 +93,19 @@ int RuleManager::getTotalLinesCleared() const
 int RuleManager::getComboDisplay() const
 {
     return comboChain;
+}
+
+void RuleManager::addPlayTimeMs(int deltaMs)
+{
+    if (deltaMs > 0)
+    {
+        playTimeMs = playTimeMs + deltaMs;
+    }
+}
+
+int RuleManager::getPlayTimeSeconds() const
+{
+    return playTimeMs / 1000;
 }
 
 bool RuleManager::isGameOver() const

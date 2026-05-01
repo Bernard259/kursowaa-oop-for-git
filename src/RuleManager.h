@@ -17,6 +17,8 @@ public:
     int getLevel() const;
     int getTotalLinesCleared() const;
     int getComboDisplay() const;
+    void addPlayTimeMs(int deltaMs);
+    int getPlayTimeSeconds() const;
 
     bool isGameOver() const;
     void setGameOver(bool value);
@@ -29,6 +31,7 @@ private:
     int level;
     int totalLinesCleared;
     int comboChain;
+    int playTimeMs;
 
     bool gameOver;
 };

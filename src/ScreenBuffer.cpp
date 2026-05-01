@@ -58,7 +58,11 @@ void ScreenBuffer::renderFrame(
     
     row += 2;
     char line[128];
-    std::snprintf(line, sizeof(line), "Score: %d  Level: %d  Lines: %d", rules.getScore(), rules.getLevel(), rules.getTotalLinesCleared());
+    int totalSeconds = rules.getPlayTimeSeconds();
+    int minutes = totalSeconds / 60;
+    int seconds = totalSeconds % 60;
+    std::snprintf(line, sizeof(line), "Score: %d  Level: %d  Lines: %d  Time: %02d:%02d",
+        rules.getScore(), rules.getLevel(), rules.getTotalLinesCleared(), minutes, seconds);
     for (int i = 0; line[i] != '\0'; i++) setCell(row, i, line[i]);
 
     // Отрисовка поля (GridModel)
