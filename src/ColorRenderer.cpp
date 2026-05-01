@@ -34,8 +34,8 @@ void ColorRenderer::renderFrame(
     (void)movement;
     (void)sequence;
 
-    // Скрываем курсор и переносим его в (0,0)
-    std::string out = "\x1b[?25l\x1b[H"; 
+    // Скрываем курсор, переносим в (0,0) и очищаем хвост экрана.
+    std::string out = "\x1b[?25l\x1b[H\x1b[0J";
 
     out += "\x1b[97m=== NEON TETRIS ===\x1b[0m\n\n";
     int totalSeconds = rules.getPlayTimeSeconds();
@@ -81,8 +81,14 @@ void ColorRenderer::renderFrame(
     }
     out += "  \x1b[37m+--------------------+\x1b[0m\n";
 
-    if (paused) out += "\n\x1b[5;91m  *** PAUSED ***\x1b[0m\n";
-    if (gameOver) out += "\n\x1b[91m  GAME OVER! Press R\x1b[0m\n";
+    out += "\n";
+    if (paused) {
+        out += "\x1b[5;91m  *** PAUSED ***\x1b[0m\n";
+    } else if (gameOver) {
+        out += "\x1b[91m  GAME OVER! Press R\x1b[0m\n";
+    } else {
+        out += "  \n";
+    }
 
     std::cout << out << std::flush;
 }
