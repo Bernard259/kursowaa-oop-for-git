@@ -4,6 +4,7 @@ cd /d "%~dp0"
 g++ -std=c++17 -O2 -Wall -Wextra -o tetris.exe ^
   src/main.cpp ^
   src/GameEngine.cpp ^
+  src/ColorRenderer.cpp ^
   src/ScreenBuffer.cpp ^
   src/MovementController.cpp ^
   src/LineClearingSystem.cpp ^

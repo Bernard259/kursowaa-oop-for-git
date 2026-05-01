@@ -1,15 +1,13 @@
 #include "GameEngine.h"
-#include "ScreenBuffer.h"
+#include "ColorRenderer.h" // Подключаем новый цветной рендерер
 
 int main() {
-    // 1. Создаем конкретный рендерер (сейчас это консоль)
-    ScreenBuffer consoleRenderer;
-
-    // 2. Передаем его в движок
-    GameEngine engine(&consoleRenderer);
-
-    // 3. Запускаем
+    // Выбираем, какой интерфейс использовать
+    ColorRenderer renderer; 
+    
+    // Движок примет ColorRenderer, потому что он наследует IRenderer
+    GameEngine engine(&renderer);
+    
     engine.run();
-
     return 0;
 }
