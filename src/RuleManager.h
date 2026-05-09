@@ -14,6 +14,7 @@ public:
     void onNoLinesCleared();
 
     int getScore() const;
+    int getBestScore() const;
     int getLevel() const;
     int getTotalLinesCleared() const;
     int getComboDisplay() const;
@@ -27,7 +28,11 @@ public:
     int getGravityDelayMs() const;
 
 private:
+    void loadBestScore();
+    void saveBestScore() const;
+
     int score;
+    int bestScore;
     int level;
     int totalLinesCleared;
     int comboChain;

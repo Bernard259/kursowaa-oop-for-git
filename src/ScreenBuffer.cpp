@@ -55,6 +55,15 @@ void ScreenBuffer::renderFrame(
     int row = 0;
     const char* title = "=== TETRIS (WinAPI + ASCII) ===";
     for (size_t i = 0; i < strlen(title); i++) setCell(row, (int)i, title[i]);
+
+    char bestLine[64];
+    std::snprintf(bestLine, sizeof(bestLine), "Рекорд: %d", rules.getBestScore());
+    int bestLen = static_cast<int>(std::strlen(bestLine));
+    int bestCol = BUFFER_COLS - bestLen - 1;
+    if (bestCol < 0) {
+        bestCol = 0;
+    }
+    for (int i = 0; bestLine[i] != '\0'; i++) setCell(row, bestCol + i, bestLine[i]);
     
     row += 2;
     char line[128];

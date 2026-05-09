@@ -1,8 +1,11 @@
 // RuleManager.cpp
 #include "RuleManager.h"
+#include <fstream>
 
 RuleManager::RuleManager()
 {
+    bestScore = 0;
+    loadBestScore();
     reset();
 }
 
@@ -60,6 +63,11 @@ void RuleManager::onLinesCleared(int lineCount)
     comboChain = comboChain + 1;
 
     score = score + gained;
+    if (score > bestScore)
+    {
+        bestScore = score;
+        saveBestScore();
+    }
     totalLinesCleared = totalLinesCleared + lineCount;
 
     // Каждые 10 собранных линий — новый уровень.
@@ -78,6 +86,11 @@ void RuleManager::onNoLinesCleared()
 int RuleManager::getScore() const
 {
     return score;
+}
+
+int RuleManager::getBestScore() const
+{
+    return bestScore;
 }
 
 int RuleManager::getLevel() const
@@ -127,4 +140,35 @@ int RuleManager::getGravityDelayMs() const
         delay = 80;
     }
     return delay;
+}
+
+void RuleManager::loadBestScore()
+{
+    std::ifstream input("highscore.txt");
+    if (!input.is_open())
+    {
+        bestScore = 0;
+        return;
+    }
+
+    int loaded = 0;
+    input >> loaded;
+    if (!input.fail() && loaded >= 0)
+    {
+        bestScore = loaded;
+    }
+    else
+    {
+        bestScore = 0;
+    }
+}
+
+void RuleManager::saveBestScore() const
+{
+    std::ofstream output("highscore.txt", std::ios::trunc);
+    if (!output.is_open())
+    {
+        return;
+    }
+    output << bestScore;
 }

@@ -45,6 +45,7 @@ void ColorRenderer::renderFrame(
     std::snprintf(timeText, sizeof(timeText), "%02d:%02d", minutes, seconds);
 
     out += "Score: \x1b[92m" + std::to_string(rules.getScore()) + "\x1b[0m | ";
+    out += "\x1b[95mРекорд: \x1b[93m" + std::to_string(rules.getBestScore()) + "\x1b[0m | ";
     out += "Level: \x1b[93m" + std::to_string(rules.getLevel()) + "\x1b[0m | ";
     out += "Time: \x1b[96m";
     out += timeText;
